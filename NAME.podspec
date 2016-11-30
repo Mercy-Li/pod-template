@@ -22,7 +22,7 @@ TODO: Add long description of the pod here.
                        DESC
 
   s.homepage         = 'https://code.dianrong.com/projects/MF/repos/sdk-ios/browse/${POD_NAME}'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+#  s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
   s.source           = { :http => "http://archiva.dianrong.com/repository/snapshots/src/${pod_name}/#{s.version}/${pod_name}-#{s.version}.zip" }
 
