@@ -1,0 +1,28 @@
+apply plugin: 'maven-publish'
+apply plugin: 'java'
+
+task zip(type: Zip) {
+    from {
+        file '${POD_NAME}'
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            url 'http://archiva.dianrong.com/repository/snapshots'
+            credentials {
+                username "syang"
+                password "welcome1"
+            }
+        }
+    }
+    publications {
+        srcZip(MavenPublication) {
+            groupId 'src'
+            artifactId '${POD_NAME}'
+            version '0.0.1'
+            artifact file('build/distributions/${POD_NAME}.zip')
+        }
+    }
+}

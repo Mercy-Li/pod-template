@@ -70,7 +70,7 @@ module Pod
     def run
       @message_bank.welcome_message
 
-      framework = self.ask_with_answers("What language do you want to use?", ["Swift", "ObjC"]).to_sym
+      framework = :objc
       case framework
         when :swift
           ConfigureSwift.perform(configurator: self)
@@ -87,6 +87,7 @@ module Pod
       rename_classes_folder
       ensure_carthage_compatibility
       reinitialize_git_repo
+      FileUtils.mv "#{pod_name}.podspec", "#{pod_name}/"
       run_pod_install
 
       @message_bank.farewell_message
@@ -117,7 +118,7 @@ module Pod
     end
 
     def replace_variables_in_files
-      file_names = ['POD_LICENSE', 'POD_README.md', 'NAME.podspec', '.travis.yml', podfile_path]
+      file_names = ['POD_LICENSE', 'POD_README.md', 'NAME.podspec', '.travis.yml', podfile_path, 'build.gradle']
       file_names.each do |file_name|
         text = File.read(file_name)
         text.gsub!("${POD_NAME}", @pod_name)
@@ -126,6 +127,7 @@ module Pod
         text.gsub!("${USER_EMAIL}", user_email)
         text.gsub!("${YEAR}", year)
         text.gsub!("${DATE}", date)
+        text.gsub!("${pod_name}", @pod_name.downcase)
         File.open(file_name, "w") { |file| file.puts text }
       end
     end

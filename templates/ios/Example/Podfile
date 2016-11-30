@@ -1,11 +1,9 @@
 use_frameworks!
+platform :ios, '7.0'
+
+source 'https://code.dianrong.com/scm/mf/mypods.git'
+source 'https://github.com/CocoaPods/Specs.git'
 
 target '${POD_NAME}_Example' do
-  pod '${POD_NAME}', :path => '../'
-
-  target '${POD_NAME}_Tests' do
-    inherit! :search_paths
-
-    ${INCLUDED_PODS}
-  end
+  pod '${POD_NAME}', :path => '../${POD_NAME}'
 end

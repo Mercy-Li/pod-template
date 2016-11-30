@@ -38,7 +38,7 @@ module Pod
 
     def add_podspec_metadata
       project_metadata_item = @project.root_object.main_group.children.select { |group| group.name == "Podspec Metadata" }.first
-      project_metadata_item.new_file "../" + @configurator.pod_name  + ".podspec"
+      project_metadata_item.new_file "../" + @configurator.pod_name + "/" + @configurator.pod_name  + ".podspec"
       project_metadata_item.new_file "../README.md"
       project_metadata_item.new_file "../LICENSE"
     end
@@ -73,11 +73,12 @@ module Pod
       # Replace the Podfile with a simpler one with only one target
       podfile_path = project_folder + "/Podfile"
       podfile_text = <<-RUBY
-use_frameworks!
+platform :ios, '7.0'
+
+source 'https://code.dianrong.com/scm/mf/mypods.git'
+source 'https://github.com/CocoaPods/Specs.git'
 target '#{test_target.name}' do
-  pod '#{@configurator.pod_name}', :path => '../'
-  
-  ${INCLUDED_PODS}
+  pod '#{@configurator.pod_name}', :path => '../#{@configurator.pod_name}'
 end
 RUBY
       File.open(podfile_path, "w") { |file| file.puts podfile_text }
